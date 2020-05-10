@@ -100,7 +100,7 @@
                 title.textContent = responseJSON.Title;
                 plot.textContent = responseJSON.Plot;
                 actors.textContent = responseJSON.Actors;
-                year.textContent = 'Filmen er udgivet i ' + responseJSON.Year + ', filmen er ' + (alder - responseJSON.Year) + ' år gammel';
+                year.textContent = 'Filmen er udgivet i ' + responseJSON.Year + ', filmen er derfor ' + (alder - responseJSON.Year) + ' år gammel';
                 imdbrating.textContent = responseJSON.imdbRating + ' i gennemsnit ud af ' + responseJSON.imdbVotes+ ' stemmer';
                 imdblink.textContent = 'https://www.imdb.com/title/' + responseJSON.imdbID;
                 imdblink.setAttribute("href", 'https://www.imdb.com/title/'+responseJSON.imdbID);

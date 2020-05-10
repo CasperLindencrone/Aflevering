@@ -78,7 +78,11 @@
     const year = document.getElementById('year');
     const imdbrating = document.getElementById('imdbrating');
     const imdblink = document.getElementById('imdblink');
-
+    
+    //Til udregning af filmens alder
+    let dato = new Date()
+    let alder = dato.getFullYear();
+    
     //Sætter variabel med forbindelse til iframe
     const YTplayer = document.getElementById('player');
 
@@ -96,7 +100,7 @@
                 title.textContent = responseJSON.Title;
                 plot.textContent = responseJSON.Plot;
                 actors.textContent = responseJSON.Actors;
-                year.textContent = 'Filmen er udgivet i ' + responseJSON.Year;
+                year.textContent = 'Filmen er udgivet i ' + responseJSON.Year + ', filmen er ' + (alder - responseJSON.Year) + ' år gammel';
                 imdbrating.textContent = responseJSON.imdbRating + ' i gennemsnit ud af ' + responseJSON.imdbVotes+ ' stemmer';
                 imdblink.textContent = 'https://www.imdb.com/title/' + responseJSON.imdbID;
                 imdblink.setAttribute("href", 'https://www.imdb.com/title/'+responseJSON.imdbID);

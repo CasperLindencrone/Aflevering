@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="dk">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+    <div id="header">
+
+        <div id="title">
+            <h1>Caspers film liste</h1>
+        </div>
+
+    </div>
+
+    <label for="filmvalg" id="valg">Vælg en af disse klassikere, der er gamle såvel som moderne.</label>
+    <br>
+
+    <!-- Her laves dropdown menuen med filmvalg
+     option value (film titel) er mindre specifik her end i scrip.js eftersom den tager udgangspunkt
+     i omdb hvor søgealgoritmen er godt nok til at finde valgte film ud fra lidt tekst-->
+    
+    <select name="filmvalg" id="filmvalg" onchange="nyFilm()">
+        <option value="" disabled selected>Vælg en film</option>
+        <option value="Tenacious D">Tenacious D</option>
+        <option value="Space Jam">Space Jam</option>
+        <option value="Ivanhoe">Ivanhoe</option>
+        <option value="Saw">Saw</option>
+        <option value="The Matrix">Matrix</option>
+        <option value="The Rocky Horror Picture Show">The Rocky horror picture show</option>
+        <option value="My Name is Nobody">My Name is Nobody</option>
+        <option value="Shawshank Redemption">Shawshank Redemption</option>
+        <option value="Kung Pow: Enter the fist">Kung Pow: Enter the Fist</option>
+        <option value="American Psycho">American Psycho</option>
+
+
+    </select>
+
+    <!-- Her indsættes data dynamisk -->
+
+    <div id="dynamisk">
+        <br>
+        <h1>Trailer</h1>
+        <br>
+        <iframe id="player" type="text/html" width="540" height="290" src="https://www.youtube.com/embed/TuWuoOX0yis"></iframe>
+        <br>
+        <h3>Titel:</h3>
+        <label type="text" id="titlen">N/A</label>
+        <br>
+        <h3>Plot:</h3>
+        <label type="text" id="plot">N/A</label>
+        <h3>Medvirkene:</h3>
+        <label type="text" id="actors">N/A</label>
+        <h3>År udgivet:</h3>
+        <label type="text" id="year">N/A</label>
+        <h3>Rating på imdb er:</h3>
+        <label type="text" id="imdbrating">N/A</label>
+        <h3>Link til imdb:</h3>
+        <a href="#" type="link" id="imdblink">N/A</a>
+    </div>
+    <div id="footer">
+
+        <div id="copy">
+            <h3>Copyright: Casper Lindencrone Nielsen, 2020</h3>
+        </div>
+
+    </div>
+
+<script>
+
+    //sætter variabler
+    const title = document.getElementById('titlen');
+    const plot = document.getElementById('plot');
+    const actors = document.getElementById('actors');
+    const year = document.getElementById('year');
+    const imdbrating = document.getElementById('imdbrating');
+    const imdblink = document.getElementById('imdblink');
+
+    //Sætter variabel med forbindelse til iframe
+    const YTplayer = document.getElementById('player');
+
+    //Denne funktion er i forbindelse med dropdown og sætter følgene data ind, ud fra option value i dropdown
+    function nyFilm() {
+        let film = document.getElementById('filmvalg');
+        const userInput = film.options[film.selectedIndex].value;
+
+        //Forbinder til omdb api med data fra dropdown og api key
+        const url = "http://www.omdbapi.com/?t=" + userInput +"&apikey=139707fe";
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        fetch(proxyUrl + url)
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                title.textContent = responseJSON.Title;
+                plot.textContent = responseJSON.Plot;
+                actors.textContent = responseJSON.Actors;
+                year.textContent = 'Filmen er udgivet i ' + responseJSON.Year;
+                imdbrating.textContent = responseJSON.imdbRating + ' i gennemsnit ud af ' + responseJSON.imdbVotes+ ' stemmer';
+                imdblink.textContent = 'https://www.imdb.com/title/' + responseJSON.imdbID;
+                imdblink.setAttribute("href", 'https://www.imdb.com/title/'+responseJSON.imdbID);
+
+                //sætter ny id ind i iframe ud fra resultatet i YTID()
+                YTplayer.setAttribute("src", "https://www.youtube.com/embed/"+ YTID());
+
+                //Her sammenlignes film titlen fra omdb med titlen i xjson variabel i script.js, og linket til valgte titel returneres
+                function YTID() {
+                    let length = xjson.trailer.length;
+                    let i;
+                    let string = responseJSON.Title;
+                    for(i = 0; i < length; i++){
+                        if(string == xjson.trailer[i].tra){
+                            return xjson.trailer[i].link;
+                        }
+                    }
+                }
+            })
+
+    }
+
+
+</script>
+</body>
+</html>

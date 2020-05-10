@@ -1,0 +1,46 @@
+body {
+    background-color: aqua;
+    background-size: auto;
+}
+
+
+#header {
+    display: grid;
+    min-height: 120px;
+    grid-auto-flow: column;
+    grid-gap: 20px;
+    background-color: black;
+    opacity: 0.5;
+}
+
+#title {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    color:white;
+    font-family: "Comic Sans MS";
+}
+
+#valg {
+    font-size: 30px;
+    font-family: "Comic Sans MS";
+}
+#footer {
+    display: grid;
+    min-height: 120px;
+    grid-auto-flow: column;
+    grid-gap: 20px;
+    background-color: black;
+    opacity: 0.5;
+}
+
+#copy {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    color: white;
+    font-family: "Comic Sans MS";
+}
+#dynamisk {
+    font-family: "Comic Sans MS";
+}
